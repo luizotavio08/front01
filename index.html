@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Compra Confirmada</title>
 
-  <!-- Facebook Pixel (oficial) -->
+  <!-- Facebook Pixel -->
   <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -15,15 +15,27 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+
     fbq('init', '1738581356816642');
 
-    // Dispara automaticamente quando a página carrega
+    // Evento padrão de visualização
     fbq('track', 'PageView');
+
+    // Evento de conteúdo visualizado
     fbq('track', 'ViewContent', {
       content_name: 'Página Obrigado',
       content_category: 'Checkout',
       value: 25.00,
       currency: 'BRL'
+    });
+
+    // Evento de compra confirmada (automático ao carregar a página)
+    fbq('track', 'Purchase', {
+      value: 25.00,
+      currency: 'BRL',
+      contents: [{ id: 'front01', quantity: 1 }],
+      content_name: 'front01',
+      content_type: 'product'
     });
   </script>
   <noscript>
@@ -78,35 +90,16 @@
   <div class="container">
     <h1>✅ Compra Confirmada!</h1>
     <p>Seu pagamento foi processado com sucesso.</p>
-    <button onclick="liberarConteudo()">Acessar Conteúdo</button>
+    <button onclick="acessarConteudo()">Acessar Conteúdo</button>
   </div>
 
   <script>
-    function liberarConteudo() {
-      // Dispara evento InitiateCheckout antes da compra
-      if(typeof fbq === 'function') {
-        fbq('track', 'InitiateCheckout', {
-          value: 25.00,
-          currency: 'BRL',
-          contents: [{ id: 'front01', quantity: 1 }],
-          content_name: 'front01',
-          content_type: 'product'
-        });
-
-        // Dispara evento Purchase
-        fbq('track', 'Purchase', {
-          value: 25.00,
-          currency: 'BRL',
-          contents: [{ id: 'front01', quantity: 1 }],
-          content_name: 'front01',
-          content_type: 'product'
-        });
-      }
-
-      // Redireciona para o Telegram
-      window.location.href = "https://t.me/+Cbe_LM5ZLoY4MGUx";
+    function acessarConteudo() {
+      // Pequeno atraso para garantir o envio do evento antes do redirecionamento
+      setTimeout(() => {
+        window.location.href = "https://t.me/+Cbe_LM5ZLoY4MGUx";
+      }, 800);
     }
   </script>
 </body>
 </html>
-
